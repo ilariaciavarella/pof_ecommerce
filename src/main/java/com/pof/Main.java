@@ -1,24 +1,23 @@
 package com.pof;
 import java.util.*;
 import java.io.*;
+import java.nio.file.*;
+import java.nio.charset.*;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to Planty of Food!");
 
-        try {
-            InputStream input = new FileInputStream("./src/main/java/assets/prodotti.csv");
-            System.out.println("Data in the file: ");
+        Path productsFile = Paths.get("./src/main/java/assets/prodotti.csv");
+        Path usersFile = Paths.get("./src/main/java/assets/utenti.csv");
+        Path sellsFile = Paths.get("./src/main/java/assets/vendite.csv");
 
-            int i = input.read();
-
-            while(i != -1) {
-                System.out.print((char)i);
-
-                i = input.read();
+        try (Scanner scanner = new Scanner(usersFile)) {
+            scanner.useDelimiter(";");
+            while (scanner.hasNext()) {
+                System.out.println(scanner.next());
             }
-            input.close();
-        } catch(Exception e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
