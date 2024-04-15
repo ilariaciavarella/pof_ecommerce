@@ -1,4 +1,5 @@
 package com.pof.model;
+import java.util.Date;
 
 public class User {
     private static int counter = 0;
