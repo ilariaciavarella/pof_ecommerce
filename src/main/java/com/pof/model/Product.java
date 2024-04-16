@@ -1,6 +1,10 @@
 package com.pof.model;
-import java.text.*;
 import java.util.*;
+import java.io.*;
+import java.nio.file.*;
+import java.nio.charset.*;
+import com.pof.model.*;
+import java.text.*;
 
 public class Product {
     private static int counter = 0;
@@ -17,6 +21,7 @@ public class Product {
     }
 
     public Product(Integer ID, String name, Date insertDate, Double price, String brand, Boolean available) {
+        counter++;
         this.ID = ID;
         this.name = name;
         this.insertDate = insertDate;
@@ -25,43 +30,41 @@ public class Product {
         this.available = available;
     }
 
-    public void setID(String IDString) {
-        this.ID = Integer.parseInt(IDString);
-    }
-
-    public void setName(String name) {
+    public Product(String name, Date insertDate, Double price, String brand, Boolean available) {
+        this.ID = ++counter;
         this.name = name;
-    }
-
-    /*public void setInsertDate(String insertDateString) {
-
-        insertDate.parse(insertDateString);
         this.insertDate = insertDate;
-    }*/
-
-    public void setPrice(String priceString) {
-        Double price = Double.parseDouble(priceString);
         this.price = price;
-    }
-
-    public void setBrand(String brand) {
         this.brand = brand;
+        this.available = available;
     }
 
-    public void setAvailable(String availableString) {
-        this.available = availableString == "SI" ? true : false;
-    }
+    public static void getData(Path productsFile, Set productSet) {
+        try (Scanner scanner = new Scanner(productsFile)) {
+            scanner.nextLine();
+            while (scanner.hasNext()) {
+                Scanner lineScanner = new Scanner(scanner.nextLine());
+                lineScanner.useDelimiter(";");
 
-    public String getInsertDate() {
-        return this.insertDate.toString();
-    }
+                Integer ID = Integer.parseInt(lineScanner.next());
+                String name = lineScanner.next();
 
-    public String getPrice() {
-        return this.price.toString();
-    }
+                String pattern = "dd/MM/yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                Date insertDate = simpleDateFormat.parse(lineScanner.next());
 
-    public String isAvailable() {
-        return this.available.toString();
+                NumberFormat nf = NumberFormat.getInstance(Locale.ITALY);
+                Double price = nf.parse(lineScanner.next()).doubleValue();
+                String brand = lineScanner.next();
+                Boolean available = (lineScanner.next().equalsIgnoreCase("NO")) ? false : true;
+
+                Product product = new Product(ID, name, insertDate, price, brand, available);
+
+                productSet.add(product);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
