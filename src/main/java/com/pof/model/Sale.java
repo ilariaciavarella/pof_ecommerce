@@ -16,6 +16,7 @@ public class Sale {
     public Sale() {
         counter++;
     }
+
     public Sale(Integer ID, Integer productID, Integer userID) {
         counter++;
         this.ID = ID;
@@ -51,5 +52,11 @@ public class Sale {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void setAll(Integer ID, Integer productID, Integer userID) {
+        this.ID = ID;
+        this.productID = productID;
+        this.userID = userID;
     }
 }

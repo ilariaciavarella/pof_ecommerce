@@ -66,6 +66,15 @@ public class User {
         }
     }
 
+    public void setAll(Integer ID, String name, String surname, Date birthday, String address, String document) {
+        this.ID = ID;
+        this.name = name;
+        this.surname = surname;
+        this.birthday = birthday;
+        this.address = address;
+        this.document = document;
+    }
+
     @Override
     public String toString() {
         return String.format("ID: %d%nNome: %s%nCognome: %s%nData di nascita: %td/%tm/%tY%nIndirizzo: %s%nDocumento: %s%n", this.ID, this.name, this.surname, this.birthday, this.birthday, this.birthday, this.address, this.document);

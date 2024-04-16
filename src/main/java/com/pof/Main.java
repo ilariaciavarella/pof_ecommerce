@@ -1,16 +1,13 @@
 package com.pof;
-import java.util.*;
-import java.io.*;
-import java.nio.file.*;
-import java.nio.charset.*;
-import java.text.*;
+
 import com.pof.model.*;
+import com.pof.controller.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Welcome to Planty of Food!");
+        System.out.println("Benvenuto su Planty of Food!");
 
-        Path productsFile = Paths.get("./src/main/java/assets/prodotti.csv");
+        /*Path productsFile = Paths.get("./src/main/java/assets/prodotti.csv");
         Path usersFile = Paths.get("./src/main/java/assets/utenti.csv");
         Path salesFile = Paths.get("./src/main/java/assets/vendite.csv");
 
@@ -20,8 +17,10 @@ public class Main {
 
         Product.getData(productsFile, productSet);
         User.getData(usersFile, userSet);
-        Sale.getData(salesFile, saleSet);
+        Sale.getData(salesFile, saleSet);*/
 
+        Controller controller = new Controller();
 
+        controller.start();
     }
 }

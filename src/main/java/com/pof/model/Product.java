@@ -2,7 +2,6 @@ package com.pof.model;
 import java.util.*;
 import java.io.*;
 import java.nio.file.*;
-import java.nio.charset.*;
 import com.pof.model.*;
 import java.text.*;
 
@@ -14,29 +13,29 @@ public class Product {
     private Date insertDate;
     private Double price;
     private String brand;
-    private Boolean available;
+    private Boolean availability;
 
     public Product() {
         counter++;
     }
 
-    public Product(Integer ID, String name, Date insertDate, Double price, String brand, Boolean available) {
+    public Product(Integer ID, String name, Date insertDate, Double price, String brand, Boolean availability) {
         counter++;
         this.ID = ID;
         this.name = name;
         this.insertDate = insertDate;
         this.price = price;
         this.brand = brand;
-        this.available = available;
+        this.availability = availability;
     }
 
-    public Product(String name, Date insertDate, Double price, String brand, Boolean available) {
+    public Product(String name, Date insertDate, Double price, String brand, Boolean availability) {
         this.ID = ++counter;
         this.name = name;
         this.insertDate = insertDate;
         this.price = price;
         this.brand = brand;
-        this.available = available;
+        this.availability = availability;
     }
 
     public static void getData(Path productsFile, Set productSet) {
@@ -67,8 +66,17 @@ public class Product {
         }
     }
 
+    public void setAll(Integer ID, String name, Date insertDate, Double price, String brand, Boolean availability) {
+        this.ID = ID;
+        this.name = name;
+        this.insertDate = insertDate;
+        this.price = price;
+        this.brand = brand;
+        this.availability = availability;
+    }
+
     @Override
     public String toString() {
-        return String.format("ID: %d%nNome: %s%nData di inserimento: %td/%tm/%tY%nPrezzo: €%.2f%nMarca: %s%nDisponibile: %b%n", this.ID, this.name, this.insertDate, this.insertDate, this.insertDate, this.price, this.brand, this.available);
+        return String.format("ID: %d%nNome: %s%nData di inserimento: %td/%tm/%tY%nPrezzo: €%.2f%nMarca: %s%nDisponibile: %b%n", this.ID, this.name, this.insertDate, this.insertDate, this.insertDate, this.price, this.brand, this.availability);
     }
 }
