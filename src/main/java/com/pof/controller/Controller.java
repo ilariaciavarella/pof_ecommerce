@@ -21,7 +21,7 @@ public class Controller {
         } while(userInput !=0);
     }
 
-    public void printOptions() {
+    private void printOptions() {
         System.out.println("Quale operazione vuoi compiere?");
         System.out.println("1. Visualizza tutti i prodotti");
         System.out.println("2. Acquista un prodotto esistente");

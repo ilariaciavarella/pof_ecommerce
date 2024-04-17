@@ -41,7 +41,12 @@ public class Service {
                 this.printSet(productSet);
                 break;
             case 2:
-                System.out.println("Acquista un prodotto esistente");
+                System.out.println("Scegli il prodotto da acquistare");
+                for (Product p : productSet) {
+                    if (p.getAvailability()) {
+                        p.printName();
+                    }
+                }
                 break;
             case 3:
                 System.out.println("Restituisci un prodotto");
@@ -53,7 +58,7 @@ public class Service {
                 System.out.println("Esporta un file con i prodotti disponibili");
                 break;
             case 0:
-                System.out.println("Esci dal programma");
+                System.out.println("Grazie per averci scelto. A presto!");
                 break;
             default:
                 System.out.print("L'operazione inserita non è valida.\nPer favore, scegli una tra le opzioni proposte.\n\n");

@@ -75,6 +75,14 @@ public class Product {
         this.availability = availability;
     }
 
+    public void printName() {
+        System.out.printf("%d - %s%n", this.ID, this.name);
+    }
+
+    public Boolean getAvailability() {
+        return this.availability;
+    }
+
     @Override
     public String toString() {
         return String.format("ID: %d%nNome: %s%nData di inserimento: %td/%tm/%tY%nPrezzo: €%.2f%nMarca: %s%nDisponibile: %b%n", this.ID, this.name, this.insertDate, this.insertDate, this.insertDate, this.price, this.brand, this.availability);
