@@ -1,5 +1,11 @@
 package com.pof;
 
+import com.pof.model.FileManager;
+import com.pof.model.User;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import java.nio.file.*;
 
@@ -7,9 +13,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Benvenuto su Planty of Food!");
 
-        Path productsFile = Paths.get("./src/main/java/assets/prodotti.csv");
-        Path usersFile = Paths.get("./src/main/java/assets/utenti.csv");
-        Path salesFile = Paths.get("./src/main/java/assets/vendite.csv");
+        FileManager fileManager = new FileManager();
+        fileManager.loadData();
 
         Scanner operationScanner = new Scanner(System.in);
         int userInput = 0;
@@ -54,7 +59,7 @@ public class Main {
                     String surname = dataScanner.nextLine();
 
                     System.out.println("\nIndica la tua data di nascita nel seguente formato: dd/mm/yyyy");
-                    String birthdate = dataScanner.nextLine();
+                    Date birthdate = FileManager.formatDate(dataScanner.nextLine());
 
                     System.out.println("\nInserisci il tuo indirizzo completo per la spedizione:");
                     String address = dataScanner.nextLine();
@@ -62,6 +67,8 @@ public class Main {
                     System.out.println("\nCi siamo quasi. Inserisci il documento di identità:");
                     String document = dataScanner.nextLine();
 
+                    User user = new User(4, name, surname, birthdate, address, document);
+                    System.out.println(user.toString());
                     System.out.println("\nGrazie! Il nuovo utente è stato aggiunto con successo!\n");
                     break;
                 case 5:
@@ -71,10 +78,12 @@ public class Main {
                     System.out.println("Grazie per averci scelto. A presto!");
                     break;
                 default:
-                    System.out.print("L'operazione inserita non è valida.\nPer favore, scegli una tra le opzioni proposte.\n");
+                    System.out.println("L'operazione inserita non è valida.");
+                    System.out.println("Per favore, scegli una tra le opzioni proposte.\n");
                     break;
             }
         } while ( userInput != 0 );
 
     }
+
 }
