@@ -1,3 +1,4 @@
+/*
 package com.pof.model;
 import java.util.*;
 import java.io.*;
@@ -87,4 +88,4 @@ public class Product {
     public String toString() {
         return String.format("ID: %d%nNome: %s%nData di inserimento: %td/%tm/%tY%nPrezzo: €%.2f%nMarca: %s%nDisponibile: %b%n", this.ID, this.name, this.insertDate, this.insertDate, this.insertDate, this.price, this.brand, this.availability);
     }
-}
+}*/

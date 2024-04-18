@@ -1,3 +1,4 @@
+/*
 package com.pof.controller;
 
 import com.pof.service.*;
@@ -30,4 +31,4 @@ public class Controller {
         System.out.println("5. Esporta un file con i prodotti disponibili");
         System.out.println("0. Esci dal programma");
     }
-}
+}*/

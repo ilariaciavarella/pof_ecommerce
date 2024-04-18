@@ -1,3 +1,4 @@
+/*
 package com.pof.model;
 import java.util.*;
 import java.io.*;
@@ -59,4 +60,4 @@ public class Sale {
         this.productID = productID;
         this.userID = userID;
     }
-}
+}*/

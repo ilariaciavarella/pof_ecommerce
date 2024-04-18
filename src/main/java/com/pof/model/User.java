@@ -1,3 +1,4 @@
+/*
 package com.pof.model;
 import java.util.*;
 import java.io.*;
@@ -79,4 +80,4 @@ public class User {
     public String toString() {
         return String.format("ID: %d%nNome: %s%nCognome: %s%nData di nascita: %td/%tm/%tY%nIndirizzo: %s%nDocumento: %s%n", this.ID, this.name, this.surname, this.birthday, this.birthday, this.birthday, this.address, this.document);
     }
-}
+}*/
