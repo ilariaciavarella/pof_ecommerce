@@ -15,9 +15,9 @@ public class FileManager {
     private final Path salesFile = Paths.get("./src/main/java/assets/vendite.csv");
 
     public FileManager() {
-        this.productSet = new LinkedHashSet<Product>();
-        this.userSet = new LinkedHashSet<User>();
-        this.saleSet = new LinkedHashSet<Sale>();
+        this.productSet = new LinkedHashSet<>();
+        this.userSet = new LinkedHashSet<>();
+        this.saleSet = new LinkedHashSet<>();
     }
 
     // METODS
@@ -39,7 +39,7 @@ public class FileManager {
     public static Double formatPrice(String stringPrice) {
         NumberFormat nf = NumberFormat.getInstance(Locale.ITALY);
         try {
-            Double price = nf.parse(stringPrice).doubleValue();
+            return nf.parse(stringPrice).doubleValue();
         } catch (ParseException e) {
             System.out.println(e.getMessage());
         }
@@ -58,7 +58,7 @@ public class FileManager {
                 loadProducts(data);
             }
 
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             System.out.println(e.getMessage());
         }
 
@@ -72,7 +72,7 @@ public class FileManager {
                 loadUsers(data);
             }
 
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             System.out.println(e.getMessage());
         }
 
@@ -95,7 +95,7 @@ public class FileManager {
         System.out.println("Loaded sales: " + saleSet.size());
     }
 
-    public void loadProducts(String[] productFields) {
+    public void loadProducts (String[] productFields) throws ParseException {
         if (productFields.length == 6) {
             Integer id = formatId(productFields[0]);
             String name = productFields[1];
@@ -111,7 +111,7 @@ public class FileManager {
         }
     }
 
-    public void loadUsers(String[] userFields) {
+    public void loadUsers(String[] userFields) throws ParseException {
         if (userFields.length == 6) {
             Integer id = formatId(userFields[0]);
             String name = userFields[1];
@@ -139,4 +139,19 @@ public class FileManager {
             System.out.println("Questa vendita non è valida");
         }
     }
+
+    // Getters
+    public void getProductsTable() {
+        System.out.printf("Planty of Foods - Lista prodotti %n");
+        System.out.printf("--------------------------------------------------------------------------------------%n");
+        System.out.printf("| %3s | %-24s | %11s | %8s | %-10s | %-11s |%n", "ID",
+                "NOME", "INSERITO IL", "PREZZO", "MARCA", "DISPONIBILE");
+        System.out.printf("--------------------------------------------------------------------------------------%n");
+        for (Product product : productSet) {
+            System.out.printf("| %3d | %-24s |  %td/%tm/%tY | € %6.2f | %-10s | %-11b |%n", product.getId(),
+                    product.getName(), product.getInsertDate(), product.getInsertDate(), product.getInsertDate(),
+                    product.getPrice(), product.getBrand(), product.getAvailability());
+        }
+    }
+
 }

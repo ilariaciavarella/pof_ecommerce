@@ -3,11 +3,8 @@ package com.pof;
 import com.pof.model.FileManager;
 import com.pof.model.User;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-import java.nio.file.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -33,7 +30,7 @@ public class Main {
 
             switch(userInput) {
                 case 1:
-                    System.out.println("Ecco una lista di tutti i prodotti:\n");
+                    fileManager.getProductsTable();
                     break;
                 case 2:
                     System.out.println("Scegli il prodotto da acquistare:");

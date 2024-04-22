@@ -29,4 +29,28 @@ public class Product {
     }
 
     // METHODS
+    // Getters
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Date getInsertDate() {
+        return insertDate;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public Boolean getAvailability() {
+        return availability;
+    }
 }
