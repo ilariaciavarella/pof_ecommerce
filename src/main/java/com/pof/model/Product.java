@@ -53,4 +53,8 @@ public class Product {
     public Boolean getAvailability() {
         return availability;
     }
+
+    public String getStringAvailability() {
+        return availability ? "Disponibile" : "Non disponibile";
+    }
 }

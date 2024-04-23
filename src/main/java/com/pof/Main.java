@@ -1,6 +1,7 @@
 package com.pof;
 
 import com.pof.model.FileManager;
+import com.pof.model.Sale;
 import com.pof.model.User;
 
 import java.util.Date;
@@ -39,16 +40,21 @@ public class Main {
                     System.out.println("\nPerfetto! Ora inserisci il tuo ID utente:");
                     int userId = dataScanner.nextInt();
 
+                    Sale sale = new Sale(productId, userId);
+                    fileManager.addSale(sale);
+
                     System.out.println("\nGrazie! La vendita è stata aggiunta correttamente.\n");
                     break;
                 case 3:
                     System.out.println("Indica la vendita da annullare:");
                     int saleId = dataScanner.nextInt();
 
+                    fileManager.removeSale(saleId);
+
                     System.out.println("\nIl prodotto è stato restituito come da tua richiesta.\n");
                     break;
                 case 4:
-                    System.out.println("Il nuovo utente sarà registrato con il seguente ID: 4");
+                    System.out.printf("Il nuovo utente sarà registrato con il seguente ID: %d%n", User.getNextId());
                     System.out.println("Per favore, inserisci il tuo nome:");
                     String name = dataScanner.nextLine();
 
@@ -64,12 +70,14 @@ public class Main {
                     System.out.println("\nCi siamo quasi. Inserisci il documento di identità:");
                     String document = dataScanner.nextLine();
 
-                    User user = new User(4, name, surname, birthdate, address, document);
-                    System.out.println(user.toString());
+                    User user = new User(User.getNextId(), name, surname, birthdate, address, document);
+                    fileManager.addUser(user);
+
                     System.out.println("\nGrazie! Il nuovo utente è stato aggiunto con successo!\n");
                     break;
                 case 5:
                     System.out.println("Esporta un file con i prodotti disponibili");
+                    fileManager.exportAvailableProducts();
                     break;
                 case 0:
                     System.out.println("Grazie per averci scelto. A presto!");

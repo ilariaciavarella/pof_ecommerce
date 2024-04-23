@@ -29,6 +29,35 @@ public class User {
     }
 
     // METHODS
+    // Getters
+    public static Integer getNextId() {
+        Integer nextId = counter;
+        return ++nextId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getDocument() {
+        return document;
+    }
 
     @Override
     public String toString() {

@@ -5,6 +5,8 @@ import java.nio.file.*;
 import java.text.*;
 import java.util.*;
 
+import static java.nio.file.StandardOpenOption.*;
+
 public class FileManager {
     private Set<Product> productSet;
     private Set<User> userSet;
@@ -144,14 +146,68 @@ public class FileManager {
     public void getProductsTable() {
         System.out.printf("Planty of Foods - Lista prodotti %n");
         System.out.printf("--------------------------------------------------------------------------------------%n");
-        System.out.printf("| %3s | %-24s | %11s | %8s | %-10s | %-11s |%n", "ID",
+        System.out.printf("| %3s | %-24s | %11s | %8s | %-10s | %-15s |%n", "ID",
                 "NOME", "INSERITO IL", "PREZZO", "MARCA", "DISPONIBILE");
         System.out.printf("--------------------------------------------------------------------------------------%n");
         for (Product product : productSet) {
-            System.out.printf("| %3d | %-24s |  %td/%tm/%tY | € %6.2f | %-10s | %-11b |%n", product.getId(),
-                    product.getName(), product.getInsertDate(), product.getInsertDate(), product.getInsertDate(),
-                    product.getPrice(), product.getBrand(), product.getAvailability());
+            System.out.printf("| %3d | %-24s |  %td/%tm/%tY | € %6.2f | %-10s | %-15s |%n",
+                    product.getId(), product.getName(), product.getInsertDate(), product.getInsertDate(),
+                    product.getInsertDate(), product.getPrice(), product.getBrand(), product.getStringAvailability());
         }
     }
 
+    public void getSalesTable() {
+        System.out.printf("Planty of Foods - Lista vendite %n");
+        System.out.printf("------------------------------------------%n");
+        System.out.printf("| %10s | %11s | %9s |%n", "ID VENDITA",
+                "ID PRODOTTO", "ID UTENTE");
+        System.out.printf("------------------------------------------%n");
+        for (Sale sale : saleSet) {
+            System.out.printf("| %-10d | %-11d |  %-9d |%n",
+                    sale.getSaleId(), sale.getProductId(), sale.getUserId());
+        }
+    }
+
+    public void getUsersTable() {
+        System.out.printf("Planty of Foods - Lista utenti %n");
+        System.out.printf("--------------------------------------------------------------------------------------%n");
+        System.out.printf("| %3s | %-18s | %18s | %10s | %-30s | %-11s |%n", "ID",
+                "NOME", "COGNOME", "NAT* IL", "INDIRIZZO", "DOCUMENTO");
+        System.out.printf("--------------------------------------------------------------------------------------%n");
+        for (User user : userSet) {
+            System.out.printf("| %3s | %-18s | %18s |  %td/%tm/%tY | %-30s | %-11s |%n",
+                    user.getId(), user.getName(), user.getSurname(), user.getBirthdate(), user.getBirthdate(),
+                    user.getBirthdate(), user.getAddress(), user.getDocument());
+        }
+    }
+
+    // Set modifiers
+    public void addSale(Sale sale) {
+        saleSet.add(sale);
+    }
+
+    public void removeSale(Integer saleId) {
+        saleSet.removeIf(sale -> sale.getSaleId() == saleId);
+    }
+
+    public void addUser(User user) {
+        userSet.add(user);
+    }
+
+    // Export
+    public void exportAvailableProducts() {
+        Path availableProductsFile = Paths.get("./POF-Available_Products.txt");
+        try (BufferedWriter writer = Files.newBufferedWriter(availableProductsFile)) {
+            for (Product product : productSet) {
+                if (product.getAvailability()) {
+                    String s = String.format("ID: %d%nNome: %s%nInserito il: %td/%tm/%tY%nPrezzo: € %.2f%nBrand: %s%n%n",
+                            product.getId(), product.getName(), product.getInsertDate(), product.getInsertDate(),
+                            product.getInsertDate(), product.getPrice(), product.getBrand());
+                    writer.write(s, 0, s.length());
+                }
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
