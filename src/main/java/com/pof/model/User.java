@@ -1,6 +1,7 @@
 package com.pof.model;
 
 import java.util.Date;
+import static com.pof.util.DataFormatter.*;
 
 public class User {
     // FIELDS
@@ -22,6 +23,16 @@ public class User {
         this.birthdate = birthdate;
         this.address = address;
         this.document = document;
+    }
+
+    public User(String[] fields) {
+        counter++;
+        this.id = formatId(fields[0]);
+        this.name = fields[1];
+        this.surname = fields[2];
+        this.birthdate = formatDate(fields[3]);
+        this.address = fields[4];
+        this.document = fields[5];
     }
 
     // METHODS

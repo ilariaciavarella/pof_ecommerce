@@ -2,6 +2,8 @@ package com.pof.model;
 
 import java.util.Date;
 
+import static com.pof.util.DataFormatter.*;
+
 public class Product {
     // FIELDS
     private static Integer counter = 0;
@@ -22,6 +24,16 @@ public class Product {
         this.price = price;
         this.brand = brand;
         this.availability = availability;
+    }
+
+    public Product(String[] fields) {
+        counter++;
+        this.id = formatId(fields[0]);
+        this.name = fields[1];
+        this.insertDate = formatDate(fields[2]);
+        this.price = formatPrice(fields[3]);
+        this.brand = fields[4];
+        this.availability = fields[5].equalsIgnoreCase("SI");
     }
 
     // METHODS
@@ -53,4 +65,6 @@ public class Product {
     public String getStringAvailability() {
         return availability ? "Disponibile" : "Non disponibile";
     }
+
+    // Setters
 }

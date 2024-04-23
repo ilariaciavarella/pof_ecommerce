@@ -1,9 +1,14 @@
-package com.pof.model;
+package com.pof.util;
+
+import com.pof.model.Product;
+import com.pof.model.Sale;
+import com.pof.model.User;
 
 import java.io.*;
 import java.nio.file.*;
 import java.text.*;
 import java.util.*;
+import java.util.function.Function;
 
 public class FileManager {
     private Set<Product> productSet;
@@ -21,123 +26,33 @@ public class FileManager {
     }
 
     // METHODS
-    // Formatters
-    public static Integer formatId(String stringId) {
-        return Integer.parseInt(stringId);
-    }
-
-    public static Date formatDate(String stringDate) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            return formatter.parse(stringDate);
-        } catch (ParseException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-
-    public static Double formatPrice(String stringPrice) {
-        NumberFormat nf = NumberFormat.getInstance(Locale.ITALY);
-        try {
-            return nf.parse(stringPrice).doubleValue();
-        } catch (ParseException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-
     // Loaders
-    public void loadData() {
-        try (BufferedReader reader = Files.newBufferedReader(productsFile)) {
-            reader.readLine();
+    public static <T> void readData(Path file, Set<T> set, Function<String[], T> mapper) {
+        try (BufferedReader reader = Files.newBufferedReader(file)) {
+            String[] fields = reader.readLine().split(";");
 
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(";");
 
-                loadProducts(data);
+                if (data.length == fields.length) {
+
+                    T item = mapper.apply(data);
+                    set.add(item);
+
+                } else {
+                    System.out.println("Questo elemento non è valido");
+                }
             }
-
-        } catch (IOException | ParseException e) {
+        } catch (IOException e ) {
             System.out.println(e.getMessage());
-        }
-
-        try (BufferedReader reader = Files.newBufferedReader(usersFile)) {
-            reader.readLine();
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(";");
-
-                loadUsers(data);
-            }
-
-        } catch (IOException | ParseException e) {
-            System.out.println(e.getMessage());
-        }
-
-        try (BufferedReader reader = Files.newBufferedReader(salesFile)) {
-            reader.readLine();
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(";");
-
-                loadSales(data);
-            }
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-        System.out.println("Loaded products: " + productSet.size());
-        System.out.println("Loaded users: " + userSet.size());
-        System.out.println("Loaded sales: " + saleSet.size());
-    }
-
-    public void loadProducts (String[] productFields) throws ParseException {
-        if (productFields.length == 6) {
-            Integer id = formatId(productFields[0]);
-            String name = productFields[1];
-            Date insertDate = formatDate(productFields[2]);
-            Double price = formatPrice(productFields[3]);
-            String brand = productFields[4];
-            Boolean availability = productFields[5].equalsIgnoreCase("SI");
-
-            Product product = new Product(id, name, insertDate, price, brand, availability);
-            productSet.add(product);
-        } else {
-            System.out.println("Questo prodotto non è valido");
         }
     }
 
-    public void loadUsers(String[] userFields) throws ParseException {
-        if (userFields.length == 6) {
-            Integer id = formatId(userFields[0]);
-            String name = userFields[1];
-            String surname = userFields[2];
-            Date birthdate = formatDate(userFields[3]);
-            String address = userFields[4];
-            String document = userFields[5];
-
-            User user = new User(id, name, surname, birthdate, address, document);
-            userSet.add(user);
-        } else {
-            System.out.println("Questo utente non è valido");
-        }
-    }
-
-    public void loadSales(String[] saleFields) {
-        if (saleFields.length == 3) {
-            Integer saleId = formatId(saleFields[0]);
-            Integer productId = formatId(saleFields[1]);
-            Integer userId = formatId(saleFields[2]);
-
-            Sale sale = new Sale(saleId, productId, userId);
-            saleSet.add(sale);
-        } else {
-            System.out.println("Questa vendita non è valida");
-        }
+    public void loadAllData() {
+        readData(productsFile, productSet, Product::new);
+        readData(usersFile, userSet, User::new);
+        readData(salesFile, saleSet, Sale::new);
     }
 
     // Getters

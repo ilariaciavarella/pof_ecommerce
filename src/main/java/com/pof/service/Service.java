@@ -1,6 +1,8 @@
 package com.pof.service;
 
 import com.pof.model.*;
+import com.pof.util.DataFormatter;
+import com.pof.util.FileManager;
 
 import java.util.Date;
 import java.util.Scanner;
@@ -11,7 +13,7 @@ public class Service {
 
     private Service() {
         fileManager = new FileManager();
-        fileManager.loadData();
+        fileManager.loadAllData();
     }
 
     public static Service getInstance() {
@@ -56,7 +58,7 @@ public class Service {
                 String surname = dataScanner.nextLine();
 
                 System.out.println("\nIndica la tua data di nascita nel seguente formato: dd/mm/yyyy");
-                Date birthdate = FileManager.formatDate(dataScanner.nextLine());
+                Date birthdate = DataFormatter.formatDate(dataScanner.nextLine());
 
                 System.out.println("\nInserisci il tuo indirizzo completo per la spedizione:");
                 String address = dataScanner.nextLine();

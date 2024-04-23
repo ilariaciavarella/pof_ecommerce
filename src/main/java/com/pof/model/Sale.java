@@ -1,5 +1,7 @@
 package com.pof.model;
 
+import static com.pof.util.DataFormatter.*;
+
 public class Sale {
     // FIELDS
     private static Integer counter = 0;
@@ -20,6 +22,13 @@ public class Sale {
         this.saleId = ++counter;
         this.productId = productId;
         this.userId = userId;
+    }
+
+    public Sale(String[] fields) {
+        counter++;
+        this.saleId = formatId(fields[0]);
+        this.productId = formatId(fields[1]);
+        this.userId = formatId(fields[2]);
     }
 
     //METHODS
