@@ -14,10 +14,6 @@ public class Product {
     private Boolean availability;
 
     // CONSTRUCTORS
-    public Product() {
-        counter++;
-    }
-
     public Product(Integer id, String name, Date insertDate, Double price, String brand, Boolean availability) {
         counter++;
         this.id = id;

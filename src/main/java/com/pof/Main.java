@@ -1,8 +1,7 @@
 package com.pof;
 
-import com.pof.model.FileManager;
-import com.pof.model.Sale;
-import com.pof.model.User;
+import com.pof.controller.Controller;
+import com.pof.model.*;
 
 import java.util.Date;
 import java.util.Scanner;
@@ -11,11 +10,14 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Benvenuto su Planty of Food!");
 
-        FileManager fileManager = new FileManager();
+        Controller controller = new Controller();
+        controller.start();
+        
+        /*FileManager fileManager = new FileManager();
         fileManager.loadData();
 
         Scanner operationScanner = new Scanner(System.in);
-        int userInput = 0;
+        int userOperation;
 
         do {
             System.out.println("Come possiamo aiutarti?");
@@ -26,10 +28,10 @@ public class Main {
             System.out.println("5. Esporta un file con i prodotti disponibili");
             System.out.println("0. Esci dal programma");
             System.out.println("\nScegli un'operazione:");
-            userInput = operationScanner.nextInt();
+            userOperation = operationScanner.nextInt();
             Scanner dataScanner = new Scanner(System.in);
 
-            switch(userInput) {
+            switch(userOperation) {
                 case 1:
                     fileManager.getProductsTable();
                     break;
@@ -87,8 +89,6 @@ public class Main {
                     System.out.println("Per favore, scegli una tra le opzioni proposte.\n");
                     break;
             }
-        } while ( userInput != 0 );
-
+        } while ( userOperation != 0 );*/
     }
-
 }

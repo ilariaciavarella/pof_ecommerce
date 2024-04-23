@@ -14,10 +14,6 @@ public class User {
     private String document;
 
     // CONSTRUCTORS
-    public User() {
-        counter++;
-    }
-
     public User(Integer id, String name, String surname, Date birthdate, String address, String document) {
         counter++;
         this.id = id;

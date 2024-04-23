@@ -5,8 +5,6 @@ import java.nio.file.*;
 import java.text.*;
 import java.util.*;
 
-import static java.nio.file.StandardOpenOption.*;
-
 public class FileManager {
     private Set<Product> productSet;
     private Set<User> userSet;
@@ -22,7 +20,7 @@ public class FileManager {
         this.saleSet = new LinkedHashSet<>();
     }
 
-    // METODS
+    // METHODS
     // Formatters
     public static Integer formatId(String stringId) {
         return Integer.parseInt(stringId);
