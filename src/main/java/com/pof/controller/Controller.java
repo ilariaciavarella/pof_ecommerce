@@ -24,7 +24,7 @@ public class Controller {
     }
 
     public void printOptions() {
-        System.out.println("Come possiamo aiutarti?");
+        System.out.println("\nCome possiamo aiutarti?");
         System.out.println("1. Visualizza tutti i prodotti");
         System.out.println("2. Acquista un prodotto esistente");
         System.out.println("3. Restituisci un prodotto");

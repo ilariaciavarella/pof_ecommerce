@@ -3,18 +3,36 @@ package com.pof.service;
 import com.pof.model.*;
 import com.pof.util.FileManager;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 import static com.pof.util.DataFormatter.*;
 
 public class Service {
     private static Service service;
-    private final FileManager fileManager;
+
+    private Set<Product> productSet;
+    private Set<User> userSet;
+    private Set<Sale> saleSet;
+
+    private final Path productsFile = Paths.get("./src/main/java/assets/prodotti.csv");
+    private final Path usersFile = Paths.get("./src/main/java/assets/utenti.csv");
+    private final Path salesFile = Paths.get("./src/main/java/assets/vendite.csv");
+
+    private final FileManager fileManager = new FileManager(productsFile, usersFile, salesFile);
 
     private Service() {
-        fileManager = FileManager.getInstance();
-        fileManager.loadAllData();
+        productSet = new LinkedHashSet<>();
+        userSet = new LinkedHashSet<>();
+        saleSet = new LinkedHashSet<>();
+        fileManager.loadAllData(productSet, userSet, saleSet);
     }
 
     public static Service getInstance() {
@@ -24,11 +42,50 @@ public class Service {
         return service;
     }
 
+    // Getters
+    public void getProductsTable() {
+        System.out.printf("Planty of Foods - Lista prodotti %n");
+        System.out.printf("--------------------------------------------------------------------------------------------%n");
+        System.out.printf("| %3s | %-24s | %11s | %8s | %-12s | %-15s |%n", "ID",
+                "NOME", "INSERITO IL", "PREZZO", "MARCA", "DISPONIBILE");
+        System.out.printf("--------------------------------------------------------------------------------------------%n");
+        for (Product product : productSet) {
+            System.out.println(product.toTable());
+        }
+    }
+
+    // Set modifiers
+    public void addSale(Sale sale) {
+        saleSet.add(sale);
+    }
+
+    public void removeSale(Integer saleId) {
+        saleSet.removeIf(sale -> sale.getSaleId() == saleId);
+    }
+
+    public void addUser(User user) {
+        userSet.add(user);
+    }
+
+    // Export
+    public void exportAvailableProducts() {
+        Path availableProductsFile = Paths.get("./POF-Available_Products.txt");
+        try (BufferedWriter writer = Files.newBufferedWriter(availableProductsFile)) {
+            for (Product product : productSet) {
+                if (product.getAvailability()) {
+                    writer.write(product.toString(), 0, product.toString().length());
+                }
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void getOperation(Integer userOperation) {
         Scanner dataScanner = new Scanner(System.in);
         switch(userOperation) {
             case 1:
-                fileManager.getProductsTable();
+                getProductsTable();
                 break;
             case 2:
                 System.out.println("Scegli il prodotto da acquistare:");
@@ -38,7 +95,7 @@ public class Service {
                 int userId = dataScanner.nextInt();
 
                 Sale sale = new Sale(productId, userId);
-                fileManager.addSale(sale);
+                addSale(sale);
 
                 System.out.println("\nGrazie! La vendita è stata aggiunta correttamente.\n");
                 break;
@@ -46,7 +103,7 @@ public class Service {
                 System.out.println("Indica la vendita da annullare:");
                 int saleId = dataScanner.nextInt();
 
-                fileManager.removeSale(saleId);
+                removeSale(saleId);
 
                 System.out.println("\nIl prodotto è stato restituito come da tua richiesta.\n");
                 break;
@@ -68,13 +125,12 @@ public class Service {
                 String document = dataScanner.nextLine();
 
                 User user = new User(User.getNextId(), name, surname, birthdate, address, document);
-                fileManager.addUser(user);
+                addUser(user);
 
                 System.out.println("\nGrazie! Il nuovo utente è stato aggiunto con successo!\n");
                 break;
             case 5:
-                System.out.println("Esporta un file con i prodotti disponibili");
-                fileManager.exportAvailableProducts();
+                exportAvailableProducts();
                 break;
             case 0:
                 System.out.println("Grazie per averci scelto. A presto!");

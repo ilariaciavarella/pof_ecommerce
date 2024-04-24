@@ -37,27 +37,26 @@ public class Product {
     }
 
     // METHODS
+    @Override
+    public String toString() {
+        return String.format("ID: %d%n" +
+                        "Nome: %s%n" +
+                        "Inserito il %td/%tm/%tY%n" +
+                        "Prezzo: %.2f%n" +
+                        "Brand: %s%n" +
+                        "%s%n%n",
+                this.id, this.name,
+                this.insertDate, this.insertDate,this.insertDate,
+                this.price, this.brand, this.getStringAvailability());
+    }
+
+    public String toTable(){
+        return String.format("| %3d | %-24s | %td/%tm/%tY  | € %6.2f | %-12s | %-15s |",
+                this.id, this.name, this.insertDate, this.insertDate,this.insertDate,
+                this.price, this.brand, this.getStringAvailability());
+    }
+
     // Getters
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Date getInsertDate() {
-        return insertDate;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
     public Boolean getAvailability() {
         return availability;
     }
@@ -65,6 +64,4 @@ public class Product {
     public String getStringAvailability() {
         return availability ? "Disponibile" : "Non disponibile";
     }
-
-    // Setters
 }
