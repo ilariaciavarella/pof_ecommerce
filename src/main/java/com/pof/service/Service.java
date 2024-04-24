@@ -1,18 +1,19 @@
 package com.pof.service;
 
 import com.pof.model.*;
-import com.pof.util.DataFormatter;
 import com.pof.util.FileManager;
 
 import java.util.Date;
 import java.util.Scanner;
+
+import static com.pof.util.DataFormatter.*;
 
 public class Service {
     private static Service service;
     private final FileManager fileManager;
 
     private Service() {
-        fileManager = new FileManager();
+        fileManager = FileManager.getInstance();
         fileManager.loadAllData();
     }
 
@@ -52,13 +53,13 @@ public class Service {
             case 4:
                 System.out.printf("Il nuovo utente sarà registrato con il seguente ID: %d%n", User.getNextId());
                 System.out.println("Per favore, inserisci il tuo nome:");
-                String name = dataScanner.nextLine();
+                String name = capitalise(dataScanner.nextLine());
 
                 System.out.println("\nOra il tuo cognome:");
-                String surname = dataScanner.nextLine();
+                String surname = capitalise(dataScanner.nextLine());
 
                 System.out.println("\nIndica la tua data di nascita nel seguente formato: dd/mm/yyyy");
-                Date birthdate = DataFormatter.formatDate(dataScanner.nextLine());
+                Date birthdate = formatDate(dataScanner.nextLine());
 
                 System.out.println("\nInserisci il tuo indirizzo completo per la spedizione:");
                 String address = dataScanner.nextLine();

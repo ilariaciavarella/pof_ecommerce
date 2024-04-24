@@ -6,11 +6,12 @@ import com.pof.model.User;
 
 import java.io.*;
 import java.nio.file.*;
-import java.text.*;
 import java.util.*;
 import java.util.function.Function;
 
 public class FileManager {
+    private static FileManager filemanager;
+
     private Set<Product> productSet;
     private Set<User> userSet;
     private Set<Sale> saleSet;
@@ -19,10 +20,17 @@ public class FileManager {
     private final Path usersFile = Paths.get("./src/main/java/assets/utenti.csv");
     private final Path salesFile = Paths.get("./src/main/java/assets/vendite.csv");
 
-    public FileManager() {
+    private FileManager() {
         this.productSet = new LinkedHashSet<>();
         this.userSet = new LinkedHashSet<>();
         this.saleSet = new LinkedHashSet<>();
+    }
+
+    public static FileManager getInstance() {
+        if (filemanager == null) {
+            filemanager = new FileManager();
+        }
+        return filemanager;
     }
 
     // METHODS
@@ -66,31 +74,6 @@ public class FileManager {
             System.out.printf("| %3d | %-24s |  %td/%tm/%tY | € %6.2f | %-10s | %-15s |%n",
                     product.getId(), product.getName(), product.getInsertDate(), product.getInsertDate(),
                     product.getInsertDate(), product.getPrice(), product.getBrand(), product.getStringAvailability());
-        }
-    }
-
-    public void getSalesTable() {
-        System.out.printf("Planty of Foods - Lista vendite %n");
-        System.out.printf("------------------------------------------%n");
-        System.out.printf("| %10s | %11s | %9s |%n", "ID VENDITA",
-                "ID PRODOTTO", "ID UTENTE");
-        System.out.printf("------------------------------------------%n");
-        for (Sale sale : saleSet) {
-            System.out.printf("| %-10d | %-11d |  %-9d |%n",
-                    sale.getSaleId(), sale.getProductId(), sale.getUserId());
-        }
-    }
-
-    public void getUsersTable() {
-        System.out.printf("Planty of Foods - Lista utenti %n");
-        System.out.printf("--------------------------------------------------------------------------------------%n");
-        System.out.printf("| %3s | %-18s | %18s | %10s | %-30s | %-11s |%n", "ID",
-                "NOME", "COGNOME", "NAT* IL", "INDIRIZZO", "DOCUMENTO");
-        System.out.printf("--------------------------------------------------------------------------------------%n");
-        for (User user : userSet) {
-            System.out.printf("| %3s | %-18s | %18s |  %td/%tm/%tY | %-30s | %-11s |%n",
-                    user.getId(), user.getName(), user.getSurname(), user.getBirthdate(), user.getBirthdate(),
-                    user.getBirthdate(), user.getAddress(), user.getDocument());
         }
     }
 
