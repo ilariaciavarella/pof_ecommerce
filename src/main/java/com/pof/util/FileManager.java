@@ -1,8 +1,6 @@
 package com.pof.util;
 
-import com.pof.model.Product;
-import com.pof.model.Sale;
-import com.pof.model.User;
+import com.pof.model.*;
 
 import java.io.*;
 import java.nio.file.*;

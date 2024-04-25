@@ -1,10 +1,7 @@
 package com.pof.util;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.text.*;
+import java.util.*;
 
 public class DataFormatter {
 
@@ -35,4 +32,5 @@ public class DataFormatter {
     public static String capitalise(String string) {
         return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
     }
+
 }

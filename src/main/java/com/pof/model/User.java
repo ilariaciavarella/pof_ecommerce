@@ -43,27 +43,7 @@ public class User {
     }
 
     public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getDocument() {
-        return document;
+        return this.id;
     }
 
     @Override

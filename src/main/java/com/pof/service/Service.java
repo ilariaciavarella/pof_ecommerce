@@ -3,36 +3,31 @@ package com.pof.service;
 import com.pof.model.*;
 import com.pof.util.FileManager;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
 
 import static com.pof.util.DataFormatter.*;
 
 public class Service {
     private static Service service;
+    private static final InputService inputService = InputService.getInstance();
 
-    private Set<Product> productSet;
-    private Set<User> userSet;
-    private Set<Sale> saleSet;
+    protected Set<Product> productSet;
+    protected Set<User> userSet;
+    protected Set<Sale> saleSet;
 
     private final Path productsFile = Paths.get("./src/main/java/assets/prodotti.csv");
     private final Path usersFile = Paths.get("./src/main/java/assets/utenti.csv");
     private final Path salesFile = Paths.get("./src/main/java/assets/vendite.csv");
 
-    private final FileManager fileManager = new FileManager(productsFile, usersFile, salesFile);
+    private final FileManager csvManager = new FileManager(productsFile, usersFile, salesFile);
 
     private Service() {
         productSet = new LinkedHashSet<>();
         userSet = new LinkedHashSet<>();
         saleSet = new LinkedHashSet<>();
-        fileManager.loadAllData(productSet, userSet, saleSet);
+        csvManager.loadAllData(productSet, userSet, saleSet);
     }
 
     public static Service getInstance() {
@@ -42,8 +37,8 @@ public class Service {
         return service;
     }
 
-    // Getters
-    public void getProductsTable() {
+    // Printer
+    public void printProductsTable() {
         System.out.printf("Planty of Foods - Lista prodotti %n");
         System.out.printf("--------------------------------------------------------------------------------------------%n");
         System.out.printf("| %3s | %-24s | %11s | %8s | %-12s | %-15s |%n", "ID",
@@ -55,16 +50,22 @@ public class Service {
     }
 
     // Set modifiers
-    public void addSale(Sale sale) {
+    public void addSale(Integer[] saleData) {
+        Sale sale = new Sale(saleData[0], saleData[1]);
         saleSet.add(sale);
+        findProductById(saleData[0]).toggleAvailability();
     }
 
     public void removeSale(Integer saleId) {
+        Integer productId = findSaleById(saleId).getProductId();
         saleSet.removeIf(sale -> sale.getSaleId() == saleId);
+        findProductById(productId).toggleAvailability();
     }
 
-    public void addUser(User user) {
+    public void addUser(String[] userData) {
+        User user = new User(userData);
         userSet.add(user);
+        System.out.printf("Il tuo utente è stato correttamente registrato con ID: %d%n", user.getId());
     }
 
     // Export
@@ -81,64 +82,31 @@ public class Service {
         }
     }
 
-    public void getOperation(Integer userOperation) {
-        Scanner dataScanner = new Scanner(System.in);
-        switch(userOperation) {
-            case 1:
-                getProductsTable();
-                break;
-            case 2:
-                System.out.println("Scegli il prodotto da acquistare:");
-                int productId = dataScanner.nextInt();
-
-                System.out.println("\nPerfetto! Ora inserisci il tuo ID utente:");
-                int userId = dataScanner.nextInt();
-
-                Sale sale = new Sale(productId, userId);
-                addSale(sale);
-
-                System.out.println("\nGrazie! La vendita è stata aggiunta correttamente.\n");
-                break;
-            case 3:
-                System.out.println("Indica la vendita da annullare:");
-                int saleId = dataScanner.nextInt();
-
-                removeSale(saleId);
-
-                System.out.println("\nIl prodotto è stato restituito come da tua richiesta.\n");
-                break;
-            case 4:
-                System.out.printf("Il nuovo utente sarà registrato con il seguente ID: %d%n", User.getNextId());
-                System.out.println("Per favore, inserisci il tuo nome:");
-                String name = capitalise(dataScanner.nextLine());
-
-                System.out.println("\nOra il tuo cognome:");
-                String surname = capitalise(dataScanner.nextLine());
-
-                System.out.println("\nIndica la tua data di nascita nel seguente formato: dd/mm/yyyy");
-                Date birthdate = formatDate(dataScanner.nextLine());
-
-                System.out.println("\nInserisci il tuo indirizzo completo per la spedizione:");
-                String address = dataScanner.nextLine();
-
-                System.out.println("\nCi siamo quasi. Inserisci il documento di identità:");
-                String document = dataScanner.nextLine();
-
-                User user = new User(User.getNextId(), name, surname, birthdate, address, document);
-                addUser(user);
-
-                System.out.println("\nGrazie! Il nuovo utente è stato aggiunto con successo!\n");
-                break;
-            case 5:
-                exportAvailableProducts();
-                break;
-            case 0:
-                System.out.println("Grazie per averci scelto. A presto!");
-                break;
-            default:
-                System.out.println("L'operazione inserita non è valida.");
-                System.out.println("Per favore, scegli una tra le opzioni proposte.\n");
-                break;
+    // Finder
+    public Product findProductById(Integer productId) {
+        for (Product product : productSet) {
+            if (product.getId() == productId) {
+                return product;
+            }
         }
+        return null;
+    }
+
+    public Sale findSaleById(Integer saleId) {
+        for (Sale sale : saleSet) {
+            if (sale.getSaleId() == saleId) {
+                return sale;
+            }
+        }
+        return null;
+    }
+
+    public User findUserById(Integer userId) {
+        for (User user : userSet) {
+            if (user.getId() == userId) {
+                return user;
+            }
+        }
+        return null;
     }
 }

@@ -57,11 +57,20 @@ public class Product {
     }
 
     // Getters
+    public Integer getId() {
+        return this.id;
+    }
+
     public Boolean getAvailability() {
-        return availability;
+        return this.availability;
     }
 
     public String getStringAvailability() {
-        return availability ? "Disponibile" : "Non disponibile";
+        return this.availability ? "Disponibile" : "Non disponibile";
+    }
+
+    // Setters
+    public void toggleAvailability() {
+        this.availability = !this.availability;
     }
 }
