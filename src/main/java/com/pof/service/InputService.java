@@ -1,62 +1,100 @@
 package com.pof.service;
 
-import java.util.regex.*;
+import static com.pof.util.DataFormatter.*;
+
+import com.pof.util.InvalidInputException;
 
 public class InputService {
     private static InputService inputService;
     private static final Service service = Service.getInstance();
 
-    private InputService() {    }
+    private InputService() {
+    }
 
     public static InputService getInstance() {
-        if(inputService == null) {
+        if (inputService == null) {
             inputService = new InputService();
         }
         return inputService;
     }
 
     // Verify ID
-    public Boolean verifyProductId(Integer productId) {
-        return productId != null
-                && productId > 0
+    public Boolean verifyProductId(String productIdString) {
+        Integer productId = formatId(productIdString);
+        if (productId > 0
                 && service.findProductById(productId) != null
-                && service.findProductById(productId).getAvailability();
+                && service.findProductById(productId).getAvailability()) {
+            return true;
+        } else {
+            throw new InvalidInputException("L'ID Prodotto che hai inserito non è valido.");
+        }
     }
 
-    public Boolean verifyUserId(Integer userId) {
-        return userId != null
-                && userId > 0
-                && service.findUserById(userId) != null;
+    public Boolean verifyUserId(String userIdString) {
+        Integer userId = formatId(userIdString);
+        if (userId > 0
+                && service.findUserById(userId) != null) {
+            return true;
+        } else {
+            throw new InvalidInputException("L'ID utente che hai inserito non è valido.");
+        }
     }
 
-    public Boolean verifySaleId(Integer saleId) {
-        return saleId != null
-                && saleId > 0
-                && service.findSaleById(saleId) != null;
+    public Boolean verifySaleId(String saleIdString) {
+        Integer saleId = formatId(saleIdString);
+        if (saleId > 0
+                && service.findSaleById(saleId) != null) {
+            return true;
+        } else {
+            throw new InvalidInputException("L'ID vendita che hai inserito non è valido.");
+        }
     }
 
     // Verify names
     public Boolean verifyNames(String name) {
-        String regex = "^[a-zA-Z]+$";
+        String regex = "^[a-zA-Z'\\s]+$";
 
-        return name.length() > 1
-                && name.matches(regex);
+        if (name.length() > 1
+                && name.matches(regex)) {
+            return true;
+        } else {
+            throw new InvalidInputException("Il nome inserito non è valido.");
+        }
+    }
+
+    // Verify date
+    public Boolean verifyDate(String date) {
+        String regex = "^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/\\d{4}$";
+
+        if (date.matches(regex)) {
+            return true;
+        } else {
+            throw new InvalidInputException("La data deve rispettare il formato dd/mm/yyyy.");
+        }
     }
 
     // Verify address
     public Boolean verifyAddress(String address) {
-        String regex = "\\b[\\w']+\\s+[\\w']+\\s+\\d+,\\s+[\\w']+\\b";
+        String regex = "[\\w\\s',]+";
 
-        return address.length() > 3
-                && address.split(" ").length > 4
-                && address.matches(regex);
+        if (address.length() > 3
+                && address.split(" ").length > 3
+                && address.matches(regex)) {
+            return true;
+        } else {
+            throw new InvalidInputException("L'indirizzo che hai inserito non è valido.");
+        }
     }
 
     // Verify document
     public Boolean verifyDocument(String document) {
-        String regex = "^[a-zA-Z0-9]+$";
+        String regex = "^[a-zA-Z0-9\\s]+$";
 
-        return document.length() > 8
-                && document.matches(regex);
+        if (document.length() > 7
+                && document.matches(regex)) {
+            return true;
+        } else {
+            throw new InvalidInputException("Il tuo documento non è valido.");
+        }
     }
 }

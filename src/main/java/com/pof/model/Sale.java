@@ -11,13 +11,6 @@ public class Sale {
     private Integer userId;
 
     // CONSTRUCTORS
-    public Sale(Integer saleId, Integer productId, Integer userId) {
-        counter++;
-        this.saleId = saleId;
-        this.productId = productId;
-        this.userId = userId;
-    }
-
     public Sale(Integer productId, Integer userId) {
         this.saleId = ++counter;
         this.productId = productId;
@@ -39,9 +32,5 @@ public class Sale {
 
     public Integer getProductId() {
         return productId;
-    }
-
-    public Integer getUserId() {
-        return userId;
     }
 }

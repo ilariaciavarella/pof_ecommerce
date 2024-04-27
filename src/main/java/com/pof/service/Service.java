@@ -11,7 +11,6 @@ import static com.pof.util.DataFormatter.*;
 
 public class Service {
     private static Service service;
-    private static final InputService inputService = InputService.getInstance();
 
     protected Set<Product> productSet;
     protected Set<User> userSet;
@@ -50,10 +49,10 @@ public class Service {
     }
 
     // Set modifiers
-    public void addSale(Integer[] saleData) {
-        Sale sale = new Sale(saleData[0], saleData[1]);
+    public void addSale(String[] saleData) {
+        Sale sale = new Sale(formatId(saleData[0]), formatId(saleData[1]));
         saleSet.add(sale);
-        findProductById(saleData[0]).toggleAvailability();
+        findProductById(formatId(saleData[0])).toggleAvailability();
     }
 
     public void removeSale(Integer saleId) {
@@ -65,7 +64,6 @@ public class Service {
     public void addUser(String[] userData) {
         User user = new User(userData);
         userSet.add(user);
-        System.out.printf("Il tuo utente è stato correttamente registrato con ID: %d%n", user.getId());
     }
 
     // Export

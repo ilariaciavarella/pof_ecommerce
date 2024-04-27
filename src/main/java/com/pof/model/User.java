@@ -15,24 +15,14 @@ public class User {
     private String document;
 
     // CONSTRUCTORS
-    public User(Integer id, String name, String surname, Date birthdate, String address, String document) {
-        counter++;
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.birthdate = birthdate;
-        this.address = address;
-        this.document = document;
-    }
-
     public User(String[] fields) {
         counter++;
         this.id = formatId(fields[0]);
-        this.name = fields[1];
+        this.name = capitalise(fields[1]);
         this.surname = fields[2];
         this.birthdate = formatDate(fields[3]);
         this.address = fields[4];
-        this.document = fields[5];
+        this.document = fields[5].toLowerCase();
     }
 
     // METHODS
@@ -44,11 +34,5 @@ public class User {
 
     public Integer getId() {
         return this.id;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("ID: %d - Name: %s - Surname: %s - Birthdate: %td/%tm/%tY - Address: %s - Document: %s",
-                id, name, surname, birthdate, birthdate, birthdate, address, document);
     }
 }
