@@ -19,10 +19,10 @@ public class User {
         counter++;
         this.id = formatId(fields[0]);
         this.name = capitalise(fields[1]);
-        this.surname = fields[2];
+        this.surname = capitalise(fields[2]);
         this.birthdate = formatDate(fields[3]);
-        this.address = fields[4];
-        this.document = fields[5].toLowerCase();
+        this.address = capitalise(fields[4]);
+        this.document = fields[5].toUpperCase();
     }
 
     // METHODS

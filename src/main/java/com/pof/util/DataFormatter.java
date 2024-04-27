@@ -30,7 +30,14 @@ public class DataFormatter {
     }
 
     public static String capitalise(String string) {
-        return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
+        StringBuilder builder = new StringBuilder(string);
+        builder.setCharAt(0, Character.toUpperCase(string.charAt(0)));
+        for (int i = 0; i < builder.length(); i++) {
+            if (Character.isWhitespace(builder.charAt(i)) || !Character.isLetterOrDigit(builder.charAt(i))) {
+                builder.setCharAt(i + 1, Character.toUpperCase(builder.charAt(i + 1)));
+            }
+        }
+        return builder.toString();
     }
 
 }

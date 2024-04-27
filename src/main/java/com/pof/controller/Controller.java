@@ -1,8 +1,9 @@
 package com.pof.controller;
 
+import com.pof.exceptions.FailedOperationException;
 import com.pof.model.User;
 import com.pof.service.*;
-import com.pof.util.InvalidInputException;
+import com.pof.exceptions.InvalidInputException;
 
 import java.util.*;
 import java.util.function.Function;
@@ -77,6 +78,8 @@ public class Controller {
             }
         } catch (NoSuchElementException | NullPointerException e) {
             System.out.println("Nessun elemento trovato");
+        } catch (FailedOperationException e) {
+            System.out.println(e.getMessage());
         } catch (Exception e) {
             System.out.println("Ops! Qualcosa è andato storto. Riprova.");
         }

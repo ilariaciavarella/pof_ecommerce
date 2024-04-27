@@ -16,16 +16,6 @@ public class Product {
     private Boolean availability;
 
     // CONSTRUCTORS
-    public Product(Integer id, String name, Date insertDate, Double price, String brand, Boolean availability) {
-        counter++;
-        this.id = id;
-        this.name = name;
-        this.insertDate = insertDate;
-        this.price = price;
-        this.brand = brand;
-        this.availability = availability;
-    }
-
     public Product(String[] fields) {
         counter++;
         this.id = formatId(fields[0]);

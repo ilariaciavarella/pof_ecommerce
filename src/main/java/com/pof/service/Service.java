@@ -1,5 +1,6 @@
 package com.pof.service;
 
+import com.pof.exceptions.FailedOperationException;
 import com.pof.model.*;
 import com.pof.util.FileManager;
 
@@ -50,25 +51,39 @@ public class Service {
 
     // Set modifiers
     public void addSale(String[] saleData) {
-        Sale sale = new Sale(formatId(saleData[0]), formatId(saleData[1]));
-        saleSet.add(sale);
-        findProductById(formatId(saleData[0])).toggleAvailability();
+        try {
+            Sale sale = new Sale(formatId(saleData[0]), formatId(saleData[1]));
+            saleSet.add(sale);
+            findProductById(formatId(saleData[0])).toggleAvailability();
+        } catch (Exception e) {
+            throw new FailedOperationException();
+        }
     }
 
     public void removeSale(Integer saleId) {
-        Integer productId = findSaleById(saleId).getProductId();
-        saleSet.removeIf(sale -> sale.getSaleId() == saleId);
-        findProductById(productId).toggleAvailability();
+        try {
+            Integer productId = findSaleById(saleId).getProductId();
+            saleSet.removeIf(sale -> sale.getSaleId() == saleId);
+            findProductById(productId).toggleAvailability();
+        } catch (Exception e) {
+            throw new FailedOperationException();
+        }
     }
 
     public void addUser(String[] userData) {
-        User user = new User(userData);
-        userSet.add(user);
+        try {
+            User user = new User(userData);
+            userSet.add(user);
+        } catch (Exception e) {
+            throw new FailedOperationException();
+        }
     }
 
     // Export
     public void exportAvailableProducts() {
-        Path availableProductsFile = Paths.get("./POF-Available_Products.txt");
+        Calendar today = Calendar.getInstance();
+        String fileName = String.format("./POF-Available_Products-%td_%tm_%tY.txt", today, today, today);
+        Path availableProductsFile = Paths.get(fileName);
         try (BufferedWriter writer = Files.newBufferedWriter(availableProductsFile)) {
             for (Product product : productSet) {
                 if (product.getAvailability()) {

@@ -2,7 +2,7 @@ package com.pof.service;
 
 import static com.pof.util.DataFormatter.*;
 
-import com.pof.util.InvalidInputException;
+import com.pof.exceptions.InvalidInputException;
 
 public class InputService {
     private static InputService inputService;

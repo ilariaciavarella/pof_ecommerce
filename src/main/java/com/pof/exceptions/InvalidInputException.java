@@ -1,4 +1,4 @@
-package com.pof.util;
+package com.pof.exceptions;
 
 public class InvalidInputException extends RuntimeException {
 
