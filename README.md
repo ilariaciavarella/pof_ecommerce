@@ -67,7 +67,7 @@ If you want to contribute, you will also need an IDE like IntelliJ IDEA or Eclip
 
 1. Now you have a `target` folder containing the jar file named `Planty_Of_Food-Ecommerce.jar`;
 
-2. To execute the program you can to either of the following:
+2. To execute the program you can do either of the following:
 
     1. Stay in the current directory and run the following command:
        ```shell

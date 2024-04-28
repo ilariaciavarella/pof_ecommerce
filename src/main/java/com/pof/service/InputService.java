@@ -65,17 +65,18 @@ public class InputService {
     // Verify date
     public Boolean verifyDate(String date) {
         String regex = "^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/\\d{4}$";
+        Integer year = Integer.parseInt(date.substring(6));
 
-        if (date.matches(regex) && Integer.parseInt(date.substring(6)) >= 1900) {
+        if (date.matches(regex) &&  year >= 1900 && year <= 2008) {
             return true;
         } else {
-            throw new InvalidInputException("La data deve rispettare il formato dd/mm/yyyy.");
+            throw new InvalidInputException("La data che hai inserito non è valida.");
         }
     }
 
     // Verify address
     public Boolean verifyAddress(String address) {
-        String regex = "[\\w\\s',]+";
+        String regex = "[\\w\\s',.]+";
 
         if (address.length() > 3
                 && address.split(" ").length > 3

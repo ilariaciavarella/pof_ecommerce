@@ -32,7 +32,7 @@ public class Product {
         return String.format("ID: %d%n" +
                         "Nome: %s%n" +
                         "Inserito il %td/%tm/%tY%n" +
-                        "Prezzo: %.2f%n" +
+                        "Prezzo: € %.2f%n" +
                         "Brand: %s%n" +
                         "%s%n%n",
                 this.id, this.name,

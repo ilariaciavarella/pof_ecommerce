@@ -40,8 +40,11 @@ public class Controller {
         System.out.println("\nScegli un'operazione:");
     }
 
-    public void displaySuccessMessage() {
+    public void displaySuccessMessage(String... extra) {
         System.out.println("\nL'operazione è stata effettuata con successo.");
+        for (String s : extra) {
+            System.out.println(s);
+        }
     }
 
     public void handleOperation(Integer userOperation) {
@@ -72,7 +75,7 @@ public class Controller {
                     break;
                 case 5:
                     this.service.exportAvailableProducts();
-                    displaySuccessMessage();
+                    displaySuccessMessage("Controlla nella cartella 'pof_ecommerce'!");
                     break;
                 case 0:
                     dataScanner.close();
@@ -119,7 +122,7 @@ public class Controller {
         userData[2] = askForData(dataScanner, inputService::verifyNames);
         System.out.println("Indica la tua data di nascita nel seguente formato: dd/mm/yyyy");
         userData[3] = askForData(dataScanner, inputService::verifyDate);
-        System.out.println("Inserisci il tuo indirizzo completo:");
+        System.out.println("Inserisci il tuo indirizzo completo (via, città):");
         userData[4] = askForData(dataScanner, inputService::verifyAddress);
         System.out.println("Inserisci il tuo documento di identità:");
         userData[5] = askForData(dataScanner, inputService::verifyDocument);
