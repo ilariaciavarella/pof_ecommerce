@@ -17,6 +17,7 @@
     </properties>
 
     <build>
+        <finalName>Planty_Of_Food-Ecommerce</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
