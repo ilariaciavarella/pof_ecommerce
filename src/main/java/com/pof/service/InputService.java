@@ -66,7 +66,7 @@ public class InputService {
     public Boolean verifyDate(String date) {
         String regex = "^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/\\d{4}$";
 
-        if (date.matches(regex)) {
+        if (date.matches(regex) && Integer.parseInt(date.substring(6)) >= 1900) {
             return true;
         } else {
             throw new InvalidInputException("La data deve rispettare il formato dd/mm/yyyy.");
@@ -95,6 +95,15 @@ public class InputService {
             return true;
         } else {
             throw new InvalidInputException("Il tuo documento non è valido.");
+        }
+    }
+
+    // Verify yes or no
+    public Boolean verifySN (String answer) {
+        if (answer.equalsIgnoreCase("S") || answer.equalsIgnoreCase("N")) {
+            return true;
+        } else {
+            throw new InvalidInputException("La tua risposta non è valida.");
         }
     }
 }

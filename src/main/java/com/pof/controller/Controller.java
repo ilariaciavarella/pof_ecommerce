@@ -1,7 +1,7 @@
 package com.pof.controller;
 
 import com.pof.exceptions.FailedOperationException;
-import com.pof.model.User;
+import com.pof.model.*;
 import com.pof.service.*;
 import com.pof.exceptions.InvalidInputException;
 
@@ -52,8 +52,15 @@ public class Controller {
                     this.service.printProductsTable();
                     break;
                 case 2:
-                    this.service.addSale(getProductToBuy(dataScanner));
-                    displaySuccessMessage();
+                    System.out.println("Per acquistare un prodotto devi possedere un account: hai già creato il tuo? (Indica S o N)");
+                    String answer = askForData(dataScanner, inputService::verifySN);
+                    if (answer.equalsIgnoreCase("S")) {
+                        this.service.addSale(getProductToBuy(dataScanner));
+                        displaySuccessMessage();
+                    } else {
+                        System.out.println("Crea prima il tuo account digitando '4'.");
+                        return;
+                    }
                     break;
                 case 3:
                     this.service.removeSale(getSaleToCancel(dataScanner));
@@ -86,11 +93,13 @@ public class Controller {
     }
 
     public String[] getProductToBuy(Scanner dataScanner) {
+        System.out.printf("La nuova vendita sarà registrata con il seguente ID: %d%n", Sale.getNextId());
         String[] salesFields = new String[2];
         System.out.println("Inserisci l'ID del prodotto da acquistare:");
         salesFields[0] = askForData(dataScanner, inputService::verifyProductId);
         System.out.println("Ottimo! Ora inserisci il tuo ID utente:");
         salesFields[1] = askForData(dataScanner, inputService::verifyUserId);
+        System.out.printf("La vendita è stata registrata con il seguente ID: %d%n", Sale.getNextId());
         return salesFields;
     }
 
@@ -114,6 +123,7 @@ public class Controller {
         userData[4] = askForData(dataScanner, inputService::verifyAddress);
         System.out.println("Inserisci il tuo documento di identità:");
         userData[5] = askForData(dataScanner, inputService::verifyDocument);
+        System.out.printf("L'utente è stato registrato con il seguente ID: %d%n", User.getNextId());
         return userData;
     }
 
@@ -126,7 +136,7 @@ public class Controller {
                 lineValidity = verifier.apply(line);
             } catch (InvalidInputException e) {
                 System.out.println(e.getMessage());
-                lineValidity = false; // Forza l'uscita dal ciclo
+                lineValidity = false;
             }
         } while (!lineValidity);
         return line;

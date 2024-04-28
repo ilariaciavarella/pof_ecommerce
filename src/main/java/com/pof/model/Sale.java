@@ -26,6 +26,11 @@ public class Sale {
 
     //METHODS
     // Getters
+    public static Integer getNextId() {
+        Integer nextId = counter;
+        return ++nextId;
+    }
+
     public Integer getSaleId() {
         return saleId;
     }
