@@ -133,10 +133,6 @@ pof_ecommerce/
 |- src/
 |   |- main/
 |   |   |- java/
-|   |   |   |- assets/
-|   |   |   |   |- prodotti.csv
-|   |   |   |   |- utenti.csv
-|   |   |   |   |- vendite.csv
 |   |   |   |- com.pof
 |   |   |   |   |- controller/
 |   |   |   |   |   |- Controller.java
@@ -154,6 +150,10 @@ pof_ecommerce/
 |   |   |   |   |   |- DataFormatter.java
 |   |   |   |   |   |- FileManager.java
 |   |   |   |   |- Main.java
+|   |   |- resources/
+|   |   |   |- prodotti.csv
+|   |   |   |- utenti.csv
+|   |   |   |- vendite.csv
 |- .gitignore
 |- pom.xml
 |- README.md
@@ -161,7 +161,7 @@ pof_ecommerce/
 
 The `Main.java` file represents the entry point of this project.  
 The `pom.xml` is the Project Object Model for Maven's functioning.  
-The `assets` folder contains the csv files with data to be loaded in the program.  
+The `resources` folder contains the csv files with data to be loaded in the program.  
 Inside the `com.pof` folder you will find all Java classes divided in the appropriate folders:
 - `Controller` for interaction with the user
 - `Exceptions` for custom exceptions
