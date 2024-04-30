@@ -3,24 +3,28 @@ package com.pof.util;
 import com.pof.model.*;
 
 import java.io.*;
-import java.nio.file.*;
 import java.util.*;
 import java.util.function.Function;
 
 public class FileManager {
-    private final Path productsFile;
-    private final Path usersFile;
-    private final Path salesFile;
+    private final String productsFile;
+    private final String usersFile;
+    private final String salesFile;
 
-    public FileManager(Path productsFile, Path usersFile, Path salesFile) {
+    public FileManager(String productsFile, String usersFile, String salesFile) {
         this.productsFile = productsFile;
         this.usersFile = usersFile;
         this.salesFile = salesFile;
     }
 
     // METHODS
-    public <T> void readData(Path file, Set<T> set, Function<String[], T> mapper) {
-        try (BufferedReader reader = Files.newBufferedReader(file)) {
+    public static InputStream getFilesStream(String file) {
+        return FileManager.class.getResourceAsStream(file);
+    }
+
+    public <T> void readData(String file, Set<T> set, Function<String[], T> mapper) {
+        InputStream fileStream = getFilesStream(file);
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(fileStream))) {
             String[] fields = reader.readLine().split(";");
 
             String line;

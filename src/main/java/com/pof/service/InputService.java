@@ -100,8 +100,9 @@ public class InputService {
     // Verify document
     public Boolean verifyDocument(String document) {
         String regex = "^[a-zA-Z0-9\\s]+$";
+        String docNoSpaces = document.replaceAll("\\s+", "");
 
-        if (document.length() > 7
+        if (docNoSpaces.length() > 7
                 && document.matches(regex)) {
             return true;
         } else {

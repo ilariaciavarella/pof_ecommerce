@@ -75,7 +75,7 @@ public class Controller {
                     break;
                 case 5:
                     this.service.exportAvailableProducts();
-                    displaySuccessMessage("Controlla nella cartella 'pof_ecommerce'!");
+                    displaySuccessMessage("Controlla nella cartella in cui ti trovi!");
                     break;
                 case 0:
                     dataScanner.close();

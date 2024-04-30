@@ -17,9 +17,9 @@ public class Service {
     protected Set<User> userSet;
     protected Set<Sale> saleSet;
 
-    private final Path productsFile = Paths.get("./src/main/java/assets/prodotti.csv");
-    private final Path usersFile = Paths.get("./src/main/java/assets/utenti.csv");
-    private final Path salesFile = Paths.get("./src/main/java/assets/vendite.csv");
+    private final String productsFile = "/prodotti.csv";
+    private final String usersFile = "/utenti.csv";
+    private final String salesFile = "/vendite.csv";
 
     private final FileManager csvManager = new FileManager(productsFile, usersFile, salesFile);
 
