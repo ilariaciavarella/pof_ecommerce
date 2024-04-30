@@ -36,8 +36,9 @@ Before running this program on your device, ensure you have the following instal
 - **Git**: you might need it installed for cloning the repository;
 - **Java** and **JDK**: ensure you have them installed on your device. This project is compatible with Java 21,
   and you can download it from [Java's official website](https://www.oracle.com/it/java/technologies/downloads/#java21);
-- **Apache Maven**: you will need it to compile the code and create the package. You can download it 
-  from [here](https://maven.apache.org/).
+- **Apache Maven**: you will need it to compile the code and create the package. You can download it
+  from [here](https://maven.apache.org/) or, if you're using a Linux-based OS, you can install it using command-line
+  tools such as `sudo`, `su`, `doas`, or `pkexec`.
 
 If you want to contribute, you will also need an IDE like IntelliJ IDEA or Eclipse.
 
@@ -92,7 +93,6 @@ The program offers the following operations:
 > 0- Esci dal programma (_Exit_)
 
 To execute an operation, type the number corresponding to the desired action.
-
 
 #### TYPE 1:
 
@@ -163,6 +163,7 @@ The `Main.java` file represents the entry point of this project.
 The `pom.xml` is the Project Object Model for Maven's functioning.  
 The `resources` folder contains the csv files with data to be loaded in the program.  
 Inside the `com.pof` folder you will find all Java classes divided in the appropriate folders:
+
 - `Controller` for interaction with the user
 - `Exceptions` for custom exceptions
 - `Model` for model classes
@@ -176,7 +177,6 @@ If you'd like to contribute to this project, please follow these steps:
 - Make your changes and commit them with clear messages;
 - Push your branch to your forked repository;
 - Submit a pull request to the original repository.
-
 
 ## License
 
