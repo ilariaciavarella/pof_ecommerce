@@ -18,6 +18,16 @@ public class InputService {
         return inputService;
     }
 
+    // Verify operation
+    public Boolean verifyOperation(String userOp) {
+        String regex = "^[0-9]+$";
+        if( userOp.matches(regex)) {
+            return true;
+        } else {
+            throw new InvalidInputException("La tua scelta deve essere un numero valido.");
+        }
+    }
+
     // Verify ID
     public Boolean verifyProductId(String productIdString) {
         Integer productId = formatId(productIdString);

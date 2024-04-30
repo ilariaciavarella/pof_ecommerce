@@ -23,7 +23,7 @@ public class Controller {
 
         do {
             printOptions();
-            userOperation = operationScanner.nextInt();
+            userOperation = Integer.parseInt(askForData(operationScanner, inputService::verifyOperation));
 
             handleOperation(userOperation);
         } while (userOperation != 0);
