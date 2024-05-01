@@ -41,8 +41,8 @@ public class Service {
     public void printProductsTable() {
         System.out.printf("Planty of Foods - Lista prodotti %n");
         System.out.printf("--------------------------------------------------------------------------------------------%n");
-        System.out.printf("| %3s | %-24s | %11s | %8s | %-12s | %-15s |%n", "ID",
-                "NOME", "INSERITO IL", "PREZZO", "MARCA", "DISPONIBILE");
+        System.out.printf("| %3s | %-24s | %-11s | %-8s | %-12s | %-15s |%n", "ID",
+                "NOME", "INSERITO IL", "PREZZO", "MARCA", "DISPONIBILITÀ");
         System.out.printf("--------------------------------------------------------------------------------------------%n");
         for (Product product : productSet) {
             System.out.println(product.toTable());
